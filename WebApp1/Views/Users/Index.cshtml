@@ -45,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.address)
         </td>
         <td>
-            @String.Format("{0:MMM dd, yyyy}", item.dob)
+            @String.Format("{0:MMMM dd, yyyy}", item.dob)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
