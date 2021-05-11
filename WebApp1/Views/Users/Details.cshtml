@@ -56,7 +56,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.pic)
+            @*@Html.DisplayFor(model => model.pic)*@
+            <img src="@Url.Content(Model.pic)" alt="Not found" width="80" height="80" />
         </dd>
 
     </dl>

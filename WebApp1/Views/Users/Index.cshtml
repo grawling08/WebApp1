@@ -13,6 +13,9 @@
 <table class="table">
     <tr>
         <th>
+            Avatar
+        </th>
+        <th>
             Username
         </th>
         <th>
@@ -33,6 +36,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            <img src="@Url.Content(item.pic)" alt="Not found" width="80" height="80" />
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.username)
         </td>
         <td>
@@ -45,7 +51,7 @@
             @Html.DisplayFor(modelItem => item.address)
         </td>
         <td>
-            @String.Format("{0:MMM dd, yyyy}", item.dob)
+            @String.Format("{0:MMMM dd, yyyy}", item.dob)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

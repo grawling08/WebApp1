@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -46,13 +47,24 @@ namespace WebApp1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,username,password,fname,lname,address,dob,pic")] user user)
+        public ActionResult Create([Bind(Include = "id,username,password,fname,lname,address,dob,pic")] user user, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            string filename = Path.GetFileName(file.FileName);
+            string _filename = DateTime.Now.ToString("yymmssfff") + filename;
+            string extension = Path.GetExtension(file.FileName);
+            string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
+
+            user.pic = "~/Images/" + _filename;
+
+            if(extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
             {
-                db.users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.users.Add(user);
+                    db.SaveChanges();
+                    file.SaveAs(path);
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(user);
@@ -78,14 +90,26 @@ namespace WebApp1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,username,password,fname,lname,address,dob,pic")] user user)
+        public ActionResult Edit([Bind(Include = "id,username,password,fname,lname,address,dob,pic")] user user, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            string filename = Path.GetFileName(file.FileName);
+            string _filename = DateTime.Now.ToString("yymmssfff") + filename;
+            string extension = Path.GetExtension(file.FileName);
+            string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
+
+            user.pic = "~/Images/" + _filename;
+
+            if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    file.SaveAs(path);
+                    return RedirectToAction("Index");
+                }
             }
+            
             return View(user);
         }
 

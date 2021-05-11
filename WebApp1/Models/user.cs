@@ -20,7 +20,7 @@ namespace WebApp1.Models
         public string fname { get; set; }
         public string lname { get; set; }
         public string address { get; set; }
-        public Nullable<System.DateTime> dob { get; set; }
-        public byte[] pic { get; set; }
+        public DateTime dob { get; set; }
+        public string pic { get; set; }
     }
 }
