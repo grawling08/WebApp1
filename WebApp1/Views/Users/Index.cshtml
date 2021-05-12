@@ -34,9 +34,17 @@
     </tr>
 
 @foreach (var item in Model) {
+    
     <tr>
         <td>
-            <img src="@Url.Content(item.pic)" alt="Not found" width="80" height="80" />
+            @if (!string.IsNullOrWhiteSpace(item.pic))
+            {
+                <img src="@Url.Content(item.pic)" alt="Not found" width="80" height="80" />
+            } else
+            {
+                <img src="@Url.Content("~/Images/placeholder.jpg")" alt="Alternate Text" width="80" height="80" />
+            }
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.username)
