@@ -39,7 +39,7 @@ namespace WebApp1.Controllers
                 if (data.Count() > 0)
                 {
                     //check password
-                    if (data.FirstOrDefault().password.ToString() != password)
+                    if (data.FirstOrDefault().password.ToString() != f_password)
                     {
                         TempData["errMsg"] = "Login failed. Incorrect Password";
                         return RedirectToAction("Login");

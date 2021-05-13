@@ -67,6 +67,7 @@ namespace WebApp1.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    user.password = HomeController.GetMD5(user.password);
                     db.users.Add(user);
                     db.SaveChanges();
                     file.SaveAs(path);
@@ -115,6 +116,7 @@ namespace WebApp1.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    user.password = HomeController.GetMD5(user.password);
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
                     file.SaveAs(path);
