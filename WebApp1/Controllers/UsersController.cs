@@ -59,11 +59,11 @@ namespace WebApp1.Controllers
         public ActionResult Create([Bind(Include = "id,username,password,fname,lname,address,dob,pic")] user user, HttpPostedFileBase file)
         {
             string filename = Path.GetFileName(file.FileName);
-            string _filename = DateTime.Now.ToString("yymmssfff") + filename;
+            string _filename = DateTime.Now.ToString("yymmssfff") + filename.Replace(" ", String.Empty);
             string extension = Path.GetExtension(file.FileName);
             string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
 
-            user.pic = "~/Images/" + _filename;
+            user.pic = "~/Images/" + _filename.ToString();
 
             if(extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
             {
@@ -107,11 +107,11 @@ namespace WebApp1.Controllers
         public ActionResult Edit([Bind(Include = "id,username,password,fname,lname,address,dob,pic")] user user, HttpPostedFileBase file)
         {
             string filename = Path.GetFileName(file.FileName);
-            string _filename = DateTime.Now.ToString("yymmssfff") + filename;
+            string _filename = DateTime.Now.ToString("yymmssfff") + filename.Replace(" ", String.Empty);
             string extension = Path.GetExtension(file.FileName);
             string path = Path.Combine(Server.MapPath("~/Images/"), _filename);
 
-            user.pic = "~/Images/" + _filename;
+            user.pic = "~/Images/" + _filename.ToString();
 
             if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
             {

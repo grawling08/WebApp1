@@ -47,19 +47,38 @@
 
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.username)
+            @if (!string.IsNullOrWhiteSpace(item.username))
+            {
+                @Html.DisplayFor(modelItem => item.username)
+            }
+
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.fname)
+            @if (!string.IsNullOrWhiteSpace(item.fname))
+            {
+                @Html.DisplayFor(modelItem => item.fname)
+            }
+            @*@Html.DisplayFor(modelItem => item.fname)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.lname)
+            @if (!string.IsNullOrWhiteSpace(item.lname))
+            {
+                @Html.DisplayFor(modelItem => item.lname)
+            }
+            @*@Html.DisplayFor(modelItem => item.lname)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.address)
+            @if (!string.IsNullOrWhiteSpace(item.address))
+            {
+                @Html.DisplayFor(modelItem => item.address)
+            }
+            @*@Html.DisplayFor(modelItem => item.address)*@
         </td>
         <td>
-            @String.Format("{0:MMMM dd, yyyy}", item.dob)
+            @if (item.dob.HasValue)
+            {
+                @String.Format("{0:MMMM dd, yyyy}", item.dob)
+            }
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
