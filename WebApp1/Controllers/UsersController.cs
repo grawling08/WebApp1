@@ -18,7 +18,7 @@ namespace WebApp1.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            if (Session["idUser"] == "" || Session["idUser"] == null)
+            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
             {
                 return RedirectToAction("Index","Home");
             }
@@ -28,7 +28,7 @@ namespace WebApp1.Controllers
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["idUser"] == "" || Session["idUser"] == null)
+            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -37,11 +37,9 @@ namespace WebApp1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             user user = db.users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+                        
             return View(user);
         }
 
@@ -82,7 +80,7 @@ namespace WebApp1.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["idUser"] == "" || Session["idUser"] == null)
+            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -130,7 +128,7 @@ namespace WebApp1.Controllers
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["idUser"] == "" || Session["idUser"] == null)
+            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }

@@ -15,11 +15,17 @@ namespace WebApp1.Controllers
 
         public ActionResult Index()
         {
+
             return View();
         }
 
         public ActionResult Login()
         {
+            if (TempData["errMsg"] != null)
+            {
+                ViewBag.error = TempData["errMsg"];
+                TempData.Remove("errMsg");
+            }
             return View();
         }
         [HttpPost]
@@ -29,9 +35,15 @@ namespace WebApp1.Controllers
             if (ModelState.IsValid)
             {
                 var f_password = GetMD5(password);
-                var data = db.users.Where(s => s.username.Equals(username) && s.password.Equals(password)).ToList();
+                var data = db.users.Where(s => s.username.Equals(username)).ToList();
                 if (data.Count() > 0)
                 {
+                    //check password
+                    if (data.FirstOrDefault().password.ToString() != password)
+                    {
+                        TempData["errMsg"] = "Login failed. Incorrect Password";
+                        return RedirectToAction("Login");
+                    } 
                     //add session
                     Session["FullName"] = data.FirstOrDefault().fname + " " + data.FirstOrDefault().lname;
                     Session["idUser"] = data.FirstOrDefault().id;
@@ -39,7 +51,7 @@ namespace WebApp1.Controllers
                 }
                 else
                 {
-                    ViewBag.error = "Login failed";
+                    TempData["errMsg"] = "Login failed. No Registered User";
                     return RedirectToAction("Login");
                 }
             }
