@@ -16,7 +16,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.username)
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.username))
+                {
+                    @Html.DisplayFor(model => model.username)
+                }
+            }
         </dd>
 
         <dt>
@@ -24,7 +29,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fname)
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.fname))
+                {
+                    @Html.DisplayFor(model => model.fname)
+                }
+            }
         </dd>
 
         <dt>
@@ -32,7 +42,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.lname)
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.lname))
+                {
+                    @Html.DisplayFor(model => model.lname)
+                }
+            }
         </dd>
 
         <dt>
@@ -40,7 +55,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.address)
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.address))
+                {
+                    @Html.DisplayFor(model => model.address)
+                }
+            }
         </dd>
 
         <dt>
@@ -48,7 +68,13 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.dob)
+
+            @{
+                if (Model.dob.HasValue)
+                {
+                    @String.Format("{0:MMMM dd, yyyy}", Model.dob)
+                }
+            }
         </dd>
 
         <dt>
@@ -56,8 +82,16 @@
         </dt>
 
         <dd>
-            @*@Html.DisplayFor(model => model.pic)*@
-            <img src="@Url.Content(Model.pic)" alt="Not found" width="80" height="80" />
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.pic))
+                {
+                    <img src="@Url.Content(Model.pic)" alt="Not found" width="200" height="200" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Images/placeholder.jpg")" alt="Alternate Text" width="80" height="80" />
+                }
+            }
         </dd>
 
     </dl>

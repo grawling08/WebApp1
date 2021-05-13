@@ -28,7 +28,7 @@ namespace WebApp1.Controllers
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
+            if (Session["idUser"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -80,7 +80,7 @@ namespace WebApp1.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
+            if (Session["idUser"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -128,7 +128,7 @@ namespace WebApp1.Controllers
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
+            if (Session["idUser"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
