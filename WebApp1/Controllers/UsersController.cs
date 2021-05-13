@@ -18,7 +18,7 @@ namespace WebApp1.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            if (Session["idUser"].ToString() == "" || Session["idUser"] == null)
+            if (Session["idUser"] == null)
             {
                 return RedirectToAction("Index","Home");
             }
