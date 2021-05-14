@@ -25,5 +25,6 @@ namespace WebApp1.Controllers
             
             return JsonConvert.SerializeObject(_users, Formatting.Indented);
         }
+        
     }
 }
