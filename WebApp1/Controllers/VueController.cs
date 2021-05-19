@@ -32,8 +32,8 @@ namespace WebApp1.Controllers
         [HttpPost]
         public JsonResult SaveUsers(user json)
         {
-            Console.WriteLine("The posted data is: " + json);
-            
+            //var _users = id;
+
             var _users = db.users.Add(json);
             db.SaveChanges();
 
@@ -50,17 +50,6 @@ namespace WebApp1.Controllers
 
         }
 
-
-        [HttpPost]
-        public String DeleteUser(int id)
-        {
-
-            user user = db.users.Find(id);
-            db.users.Remove(user);
-            db.SaveChanges();
-
-            return "Deleted";
-        }
         
     }
 }
