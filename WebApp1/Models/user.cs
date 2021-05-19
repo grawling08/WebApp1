@@ -14,6 +14,12 @@ namespace WebApp1.Models
     
     public partial class user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.pic = "~/Images/placeholder.jpg";
+        }
+    
         public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }

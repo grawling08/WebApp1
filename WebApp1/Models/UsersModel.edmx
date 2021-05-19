@@ -36,7 +36,7 @@
           <Property Name="lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="dob" Type="DateTime" Precision="0" />
-          <Property Name="pic" Type="String" Nullable="true" />
+          <Property Name="pic" Type="String" Nullable="true" DefaultValue="~/Images/placeholder.jpg" />
         </EntityType>
         <EntityContainer Name="webapp_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="users" EntityType="Self.user" />
