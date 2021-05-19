@@ -50,6 +50,17 @@ namespace WebApp1.Controllers
 
         }
 
+
+        [HttpPost]
+        public String DeleteUser(int id)
+        {
+
+            user user = db.users.Find(id);
+            db.users.Remove(user);
+            db.SaveChanges();
+
+            return "Deleted";
+        }
         
     }
 }

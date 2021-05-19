@@ -57,7 +57,7 @@
                 <div class="form-group">
                     <label for="dob" class="control-label col-md-2"> Avatar </label>
                     <div class="col-md-10">
-                        <input type="file" name="pic" v-on:change="model.pic" class="form-control" />
+                        <input type="file" name="file" id="file" class="form-control" />
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                 </th>
                 <th></th>
             </tr>
-            <tr v-for="item in list">
+            <tr v-for="item in list" >
                 <td>
                     <img :src="item.pic" width="80" height="80" />
                 </td>
@@ -102,7 +102,10 @@
                 <td>{{ item.lname }}</td>
                 <td>{{ item.address }}</td>
                 <td>{{ item.dob }}</td>
-                <td><button class="btn btn-primary" v-on:click="toggleForm(item, 'edit')">Open</button> <button class="btn btn-danger">Delete</button></td>
+                <td>
+                    <button class="btn btn-primary" v-on:click="toggleForm(item, 'edit')">Open</button>
+                    <button class="btn btn-danger" v-on:click="deleteUser(item.id)">Delete</button>
+                </td>
             </tr>
         </table>
     </div>
@@ -136,26 +139,13 @@
                     mode: ""
                 };
             },
-            created: function () {
-                axios.get(url + '/GetUsers')
-                    .then((response) => {
-                        response.data.forEach((item, index) => {
-                            if (item.pic !== null) {
-                                response.data[index].pic = item.pic.replace("~", '../..');
-                            } else {
-                                response.data[index].pic = "../../Images/placeholder.jpg";
-                            }
-                            
-                            var n = new Date(item.dob);
-                            response.data[index].dob = n.toLocaleString("en-CA", { year: 'numeric', month: '2-digit', day: '2-digit' });
-                        });
-                        this.list = response.data;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+            mounted: function () {
+                this.getUser();
             },
             methods: {
+                rerenderList: function () {
+                    this.index += 1;
+                },
                 toggleForm: function (item, mode) {
                     this.$refs["userForm"].hidden = !this.$refs["userForm"].hidden;
                     if (mode == "edit") {
@@ -171,11 +161,31 @@
                         this.mode = "new";
                     }
                 },
+                getUser: function () {
+                    axios.get(url + '/GetUsers')
+                        .then((response) => {
+                            response.data.forEach((item, index) => {
+                                if (item.pic !== null) {
+                                    response.data[index].pic = item.pic.replace("~", '../..');
+                                } else {
+                                    response.data[index].pic = "../../Images/placeholder.jpg";
+                                }
+
+                                var n = new Date(item.dob);
+                                response.data[index].dob = n.toLocaleString("en-CA", { year: 'numeric', month: '2-digit', day: '2-digit' });
+                            });
+                            this.list = response.data;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                },
                 saveUser: function () {
                     if (this.mode == "edit") {
-                        console.log("update db");
                         axios.post(url + '/EditUser', { json: this.model })
                             .then((response) => {
+                                this.getUser();
+                                this.toggleForm();
                                 console.log(response);
                             })
                             .catch((error) => {
@@ -184,12 +194,29 @@
                     } else if (this.mode == "new") {
                         axios.post(url + '/SaveUsers', { json: this.model })
                             .then((response) => {
+                                this.getUser();
+                                this.toggleForm();
                                 console.log(response);
                             })
                             .catch((error) => {
                                 console.log(error);
                             });
                     }
+                    
+                },
+                deleteUser: function (id) {
+                    var r = confirm("Are you sure you want to delete?");
+                    if (r == true) {
+                        axios.post(url + '/DeleteUser', { id: id })
+                            .then((response) => {
+                                console.log(response);
+                                alert("Deleted!");
+                                this.getUser();
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    } 
                 }
             }
         });
