@@ -136,6 +136,7 @@
                         dob: "",
                         pic: ""
                     },
+                    selectedFile: null,
                     mode: ""
                 };
             },
@@ -143,8 +144,9 @@
                 this.getUsers();
             },
             methods: {
-                onSelectImg: function () {
-
+                onSelectImg: function (event) {
+                    //console.log(event.target.files[0]);
+                    this.selectedFile = event.target.files[0];
                 },
                 rerenderList: function () {
                     this.index += 1;
@@ -186,10 +188,20 @@
                 saveUser: function () {
                     if (this.mode == "edit") {
                         console.log("update db");
+                        const fd = new FormData();
+                        fd.append('img', this.selectedFile, this.selectedFile.name);
+                        fd.append('id', this.model.id);
                         axios.post(url + '/EditUser', { json: this.model })
                             .then((response) => {
-                                this.getUsers();
-                                this.toggleForm();
+                                axios.post(url + '/UploadImg', fd)
+                                    .then((response) => {
+                                        console.log(response);
+                                        this.getUsers();
+                                        this.toggleForm();
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
                                 console.log(response);
                             })
                             .catch((error) => {
@@ -198,8 +210,19 @@
                     } else if (this.mode == "new") {
                         axios.post(url + '/SaveUsers', { json: this.model })
                             .then((response) => {
-                                this.getUsers();
-                                this.toggleForm();
+                                const fd = new FormData();
+                                let idUser = response.data.id;
+                                fd.append('img', this.selectedFile, this.selectedFile.name);
+                                fd.append('id', idUser);
+                                axios.post(url + '/UploadImg', fd)
+                                    .then((response) => {
+                                        console.log(response);
+                                        this.getUsers();
+                                        this.toggleForm();
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
                                 console.log(response);
                             })
                             .catch((error) => {
